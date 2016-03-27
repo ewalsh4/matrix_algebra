@@ -1,0 +1,600 @@
+Matrix Algebra 
+========================================================
+author:Eric M. Walsh
+date: `r format(Sys.Date(), format="%B %d, %Y")`
+
+Scalars
+========================================================
+##### A scalar is a single number.
+
+```{r}
+x <- 3
+x
+```
+Vectors
+=========================================================
+Row Vector
+```{r}
+vector <- cbind(1,2,3)
+vector
+```
+
+Vectors
+======================================================
+Column Vector
+```{r}
+column_vector <- rbind(4,5,6)
+column_vector
+```
+
+Matrix 
+=========================================================
+Here we're creating a 3 x 2 matrix.
+```{r,class="fragment"}
+A <- matrix(c(1,2,3,4,5,6), nrow=3, ncol=2)
+A
+```
+
+
+Matrix Notation
+=========================================================
+
+A matrix is typically denoted using a capital letter with the dimensions of the matrix in subscript.  The letter n typically refers to the number of rows and m to the number of columns.  Formally this is written as:
+
+ $$A_{nxm}$$ 
+or alternatively:
+
+$$A_{nxk}$$
+
+
+A matrix with 3 rows and 2 columns would therefore be:
+
+$$A_{3x2}$$
+
+Dimensions
+=========================================================
+We can use R to tell us the dimensions of our matrix.
+```{r}
+A
+dim(A)
+```
+
+Element Notation
+=========================================================
+
+An element on the other hand is typically denoted using a lower case letter.  The subscript here refers to the row and column location of the element in the matrix denoted by i and j respectively.  Formally this is written as:
+
+$$a_{i,j}$$
+
+As a result, if we were referring to the element in the second row and the second column it would be: 
+
+$$a_{2,2}$$
+
+Returning an Element
+=========================================================
+We can also make R return the specific element of a matrix.
+```{r}
+A
+A[2,2]
+```
+
+Manipulating a Matrix
+=========================================================
+Transposing a matrix "flips" the rows and columns of the matrix.  This is typically written as:
+
+$$A^{T} or\ A^{'}$$
+
+For each element in the matrix therefore:
+
+$$a^{T}_{i,j} = a_{j,i}$$
+
+Transposing a Matrix
+=========================================================
+R can also do this for us.
+```{r}
+A
+```
+
+Transposing a Matrix
+=========================================================
+R can also do this for us.
+```{r}
+A
+t(A)
+```
+
+Matrix Addition
+=========================================================
+
+
+```{r}
+B <- matrix(c(4,2,3,5), nrow=2, ncol=2)
+B
+```
+***
+
+```{r}
+C <- matrix(c(1,4,7,2), nrow=2, ncol=2)
+C
+```
+
+Matrix Addition
+=========================================================
+
+
+```{r}
+B+C
+```
+
+Matrix Subtraction
+=========================================================
+
+```{r}
+B
+```
+***
+
+```{r}
+C
+```
+
+
+Matrix Subtraction
+=========================================================
+
+
+```{r}
+B-C
+```
+
+Adding Different Order Matrices 
+=========================================================
+
+You can only add two matrices that are of the same order.  If you don't believe me, try it after class and let me know how it goes.  
+
+
+Multiplication
+=========================================================
+
+You can multiply a scalar times a matrix.  Say we wanted to multiply matrix A by the scalar we created at the beginning (3).  
+```{r}
+A
+```
+
+Multiplication
+=========================================================
+
+The result is:  
+```{r}
+A*x
+```
+
+Multiplication of Two Matrices
+=========================================================
+
+Say we're going to multiply two matrices, in this case B and C to create a new matrix D. For each element of D we calculate. 
+
+$$d_{ij} = \sum\limits_{k} b_{ik} c_{kj}$$
+
+k refers to the column and row numbers respectively so for the first element. 
+
+$$d_{1,1} = b_{1,1}c_{1,1} + b_{1,2}c_{2,1}$$
+
+Notice that you are multiplying the first row of B by the first column of C.
+
+Multiplication of Two Matrices
+=========================================================
+
+Remember the first row of our matrix B was (4,3) and the first column of C was (1,4). So 
+
+$$d_{1,1} = 4 * 1  + 3 * 4$$
+
+```{r}
+4*1 + 3*4
+```
+
+Now, fill in the rest of D. 
+
+Hint: $$d_{1,2} = b_{1,1}c_{1,2} + b_{1,2}c_{2,2}$$
+
+Remember B and C were:
+=========================================================
+
+```{r}
+B
+```
+***
+```{r}
+C
+```
+
+Hint: $$d_{1,2} = b_{1,1}c_{1,2} + b_{1,2}c_{2,2}$$
+
+
+
+Multiplication of Two Matrices
+=========================================================
+
+Of course, R can do this for us.  
+The result is:  
+```{r}
+B %*% C
+```
+
+
+Multiplication of Two Matrices
+=========================================================
+
+Notice that this equation provides us with insight about the dimensions of the product matrix (here matrix D).  Notice that D will have the same number of rows as the first matrix and the same number of columns as the second matrix.
+
+$$d_{ij} = \sum\limits_{k} b_{ik} c_{kj}$$
+
+
+Multiplication of Two Matrices
+=========================================================
+
+```{r}
+Y <- matrix(c(3,2,3,5,-1,4), nrow=2, ncol=3)
+Y
+```
+***
+
+```{r}
+Z <- matrix(c(1,4,7), nrow=3, ncol=1)
+Z
+```
+
+Now find the product of Y and Z.  What are the dimensions of the new matrix?  
+
+Product of Y and Z 
+========================================================
+
+```{r}
+Y %*% Z
+```
+
+Determinant
+========================================================
+The determinant of a matrix is useful because it tells you whether the matrix is singular.  If the determinant of a matrix is 0 the matrix is singular and it does not have an inverse.  If it is non-zero it has an inverse.  The determinant of matrix A would be written as:
+ \begin{vmatrix}
+A
+ \end{vmatrix}
+
+The determinant is only computed for square matrices. To compute the determinant of a 2x2 matrix you would use the formula.
+
+$$
+ \begin{vmatrix}
+A
+ \end{vmatrix}
+ = a_{1,1}a_{2,2} - a_{1,2}a_{2,2}$$
+ 
+ 
+Determinant
+========================================================
+Remember that matrix B was: 
+$$
+ \begin{bmatrix}
+4 & 3 \\
+2 & 5 \\
+
+ \end{bmatrix} $$
+ 
+ As a result, the determinant is: 
+ 
+ $$
+ \begin{vmatrix}
+B
+ \end{vmatrix}
+ = 4(5) - 2(3)=14$$
+ 
+Determinant in R
+========================================================
+R can tell us the same thing we just did by hand: 
+```{r}
+B
+det(B)
+```
+
+Determinant in R
+========================================================
+Now try it with C: 
+```{r}
+C
+```
+
+Determinant in R
+========================================================
+Now try it with C: 
+```{r}
+C
+det(C)
+```
+
+Determinant in R
+========================================================
+Notice that the determinant can either be positive or negative, but since it is not zero this is a non-singular matrix that does have an inverse.  
+
+
+Determinant of a 3X3 Matrix 
+========================================================
+First we need to create one in R.  Let's call this matrix T.
+
+```{r}
+T <- matrix(c(1,0,5,2,1,3,1,1,0), nrow=3, ncol=3)
+T
+```
+
+To do this we'll expand over the first row.  
+
+Sub-matrices of T
+=======================================================
+First, you need to find the minor of each element of the first row.  The minor is the determinant of the sub-matrix of that element.  The sub-matrix of an element is the matrix that remains after you delete the row and column associated with that element. Let's begin with element $t_{1,1}$.
+$$
+ \begin{bmatrix}
+\style{color:red}1  &  2 &  1 \\
+0  &  1 &  1 \\
+5  &  3 &  0 \\
+
+ \end{bmatrix} $$
+ 
+ Sub-matrix of the First Element
+=======================================================
+The row and column that correspond to element $t_{1,1}$ are highlighted in red.
+$$
+ \begin{bmatrix}\require{cancel}
+\style{color:red}{\cancel{1}} &  \style{color:red}{\cancel{2}} &  \style{color:red}{\cancel{1}} \\
+\style{color:red}{\cancel{0}}  &  1 &  1 \\
+\style{color:red}{\cancel{5}}  &  3 &  0 \\
+
+ \end{bmatrix} $$
+ 
+When we delete these we are left with the sub-matrix of $t_{1,1}$.  The determinant of this sub-matrix is:
+$$
+\begin{vmatrix}
+1 &  1 \\
+3 &  0 \\
+\end{vmatrix} = -3
+$$
+As a result the minor of $t_{1,1}$ is -3.  Now, on your own find the minor of  $t_{1,2}$ and  $t_{1,3}$.
+
+Sub-matrices of T
+=======================================================
+R can also find the sub-matrix of each element in the first row.  
+```{r}
+T[2:3,2:3]
+T[-1,-2]
+```
+***
+```{r}
+T[-1,-3]
+```
+
+Determinants of Each Sub-matrix
+========================================================
+And the minor of each element.  
+```{r}
+det(T[-1,-1])
+det(T[-1,-2])
+det(T[-1,-3])
+```
+
+
+Co-factors
+========================================================
+Now that we have found the minor of each element of the first row (-3,-5, and -5) we need to convert the minors to co-factors.    
+
+A co-factor of an element is the minor of that element multiplied by $(-1)^{i+j}$
+
+So the co-factor of $t_{1,1}$ is:
+
+$$(-1)^{2}(-3) = -3$$
+
+Now, compute the co-factor of $t_{1,2}$ and $t_{1,3}$
+
+Co-factor
+========================================================
+
+The co-factor of $t_{1,2}$ is:
+$$(-1)^{3}(-5) = 5$$
+
+The co-factor of $t_{1,3}$ is:
+$$(-1)^{4}(-5) = -5$$
+
+The formula for the determinant of the original matrix is:
+
+$$(t_{1,1})(c_{1,1}) + (t_{1,2})(c_{1,2}) + (t_{1,3})(c_{1,3})$$
+
+So plugging in: 
+
+$$(1)(-3) + (2)(5) + (1)(-5) = 2$$
+
+Expanding
+========================================================
+For an nxn matrix though, we can actually choose to expand over any row or column to get the determinant of the matrix.  We do not need to select the first row.  Formally this means that for any row:
+
+$$det{(T)} = \sum\limits_{i=1}^n t_{ij} c_{ij}$$
+
+and for any fixed column:
+
+$$det{(T)} = \sum\limits_{i=1}^n t_{ij} c_{ij}$$
+
+Expanding
+========================================================
+
+As a result, say we expanded over column 1 as opposed to row 1.  Remember that the original matrix was: 
+
+$$
+ \begin{bmatrix}
+1  &  2 &  1 \\
+0  &  1 &  1 \\
+5  &  3 &  0 \\
+
+ \end{bmatrix} $$
+ 
+ Notice that there is not reason to find the cofactor of element $t_{2,1}$ because it cancels out.  
+ 
+ 
+Expanding
+========================================================
+The cofactor of $t_{1,1}$ remains the same:
+
+$$(-1)^{2}(-3) = -3$$
+
+As a result, we need to find the cofactor of $t_{3,1}$.  
+
+Expanding
+========================================================
+The sub-matrix is: 
+```{r}
+T[-3,-1]
+```
+
+The minor (and in this case also the cofactor) is therefore: 
+```{r}
+5*det(T[-3,-1])
+```
+ 
+Expanding
+========================================================
+So the determinant of the matrix is: 
+
+$$-3+ 0 + 5= 2$$
+
+$$-3 + 5 = 2$$
+
+and we can use R to check this: 
+```{r}
+det(T)
+```
+
+
+
+
+
+Identity Matrix
+========================================================
+An identity matrix is a square matrix with 1's on the main diagonal and 0's for every other element.  
+
+A matrix multiplied by the identity matrix produces the original matrix.  
+
+Identity Matrix
+========================================================
+To produce an identity matrix in R you can use the diag command and set the dimensions.
+```{r}
+I <- diag(3)
+I
+```
+
+Identity Matrix
+========================================================
+```{r}
+T
+T %*% I
+```
+
+Trace
+========================================================
+The trace of a matrix is the sum of the main diagonal.  Formally this is: 
+
+$$ tr(A) = \sum\limits_{i=1}^n a_{ii} $$
+
+Trace
+========================================================
+```{r}
+library(psych)
+T
+tr(T)
+```
+
+
+Inverse
+========================================================
+
+The inverse of a matrix is typically denoted as: 
+
+$$A^{-1}$$
+
+The inverse of a matrix, multiplied by the original matrix produces the identity matrix.  So:
+
+$$A^{-1}(A) = I $$
+
+Inverse
+========================================================
+The inverse of a matrix in R can be found using the solve command.  
+```{r}
+A <- matrix(c(1,1,1,3,4,3,3,3,4), nrow=3, ncol=3)
+A
+```
+
+Inverse
+========================================================
+The inverse of a matrix in R can be found using the solve command.  
+```{r}
+A <- matrix(c(1,1,1,3,4,3,3,3,4), nrow=3, ncol=3)
+solve(A)
+```
+
+Inverse
+=====================================================
+and to check
+```{r}
+A %*% solve(A)
+```
+
+
+Matrix in OLS
+========================================================
+ Those of you who have taken a class in OLS know that matrix algebra is used to calculate the vector of beta coefficients.
+
+$$\hat{\beta} = (X'X)^{-1}X'Y $$
+
+Data Structure
+========================================================
+Most of the data you will encounter will be in a simple matrix structure with the individual observations serving as the rows and the variables as the columns.  
+
+Taking a look at a network structure though gives us an idea of instances where data are stored in multiple matrices.  
+
+Fowler Data
+========================================================
+The following is an example using James H. Fowler's co-sponsorship data from the 110th congress.  
+
+First we can take a look at the adjacency matrix. 
+
+The adjacency matrix is an nXn matrix that connects Senators.  If two Senators cosponsor a bill, the corresponding element contains a 1.  Otherwise the element contains a 0.  Along the main diagonal are structural zeros. 
+
+Fowler Data
+========================================================
+The same thing can be represented using a simple edge list.  
+
+Notice how these correspond to the 1's in the adjacency matrix.
+
+We can also graph this simple network.  
+
+<a href="blob.html" target="_blank">example</a>
+
+
+Fowler Data
+========================================================
+Of course, our Senators also have attributes that we care about.  They come from a specific state, have a voting record, a political party etc.  
+
+These are stored in a separate matrix that we can also examine.  
+
+As a result, we may want to use these attributes as well.  
+
+<a href="colored_net.pdf" target="_blank">example</a>
+
+The End
+========================================================
+
+
+Junk
+========================================================
+
+```r
+
+obj <- gplot(net,gmode="graph",coord=Z,label=Senator_data$Network.Names,label.cex=.5,displayisolates=F, vertex.col=Senator_data$color, vertex.cex=Senator_data$stren*2, edge.col=rgb(100,100,100,maxColorValue=250,alpha=50))
+title(main="LSM: 110th Congress Co-sponsorship Network", mai=2)
+legend(locator(1), legend=c("Democrat", "Republican", "Independent"),
+     pch=c(21), col="black", pt.bg=c("blue", "red", "purple"))
+
+```
